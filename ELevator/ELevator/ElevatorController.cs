@@ -85,7 +85,6 @@ namespace Elevator
                 }
 
                 if (!IsElevatorMoving) {
-                    Console.WriteLine("New thread");
                     IsElevatorMoving = true;
                     _thrd = new Thread(new ParameterizedThreadStart(ElevatorMovementAction));
                     _thrd.Start(new Tuple<ElevatorController, Action<int>, Action>(this, SetCurrentFloor, ElevatorStopped));
