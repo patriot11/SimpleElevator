@@ -45,8 +45,7 @@ namespace Elevator
 
         #region Variables
 
-        private readonly object _syncCommand = new object();
-        private readonly object _syncSetFloor = new object();
+        private readonly object _syncRoot = new object();
 
         private Thread _thrd;
 
@@ -70,7 +69,7 @@ namespace Elevator
 
         public void CommandInitiated(UserElevatorCommand command)
         {
-            lock (_syncCommand) {
+            lock (_syncRoot) {
                 if (command.FloorNumber == CurrentFloor) {
                     Console.WriteLine($"You are already on floor {command.FloorNumber}");
                     return;
@@ -137,7 +136,7 @@ namespace Elevator
 
         private void SetCurrentFloor(int floor)
         {
-            lock (_syncSetFloor) {
+            lock (_syncRoot) {
                 CurrentFloor = floor;
                 Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Current floor is: {CurrentFloor}");
             }
